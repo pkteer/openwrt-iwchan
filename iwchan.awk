@@ -46,7 +46,7 @@ function get_iwconf() {
         if(phy_conf != phy) continue
         # Ignore devices with a - in the name (wlan0-1)
         # These are sub-APs which cannot be scanned
-        if(dev ~= /-/) continue
+        if(dev ~ /-/) continue
         dev_conf = dev
         freq_conf = iwdev[phy_conf, dev_conf, "freq"]
         band_conf = iwphy[phy_conf, freq_conf, "band"]
