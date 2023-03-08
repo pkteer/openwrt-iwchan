@@ -17,7 +17,10 @@ function get_iwphy() {
             # Don't select channels which involve radar detection because
             # the wifi chip may not be able to use them at all, which will
             # result in a silent failure to set the channel.
-            if($0 ~ "radar detection") continue
+            if($0 ~ "(radar detection)") continue
+            # Also ignore channels that are "no IR" because they're
+            # not allowed for an AP.
+            if($0 ~ "(no IR)") continue
             iwphy[phy, freq, "band"] = band
             iwphy[phy, freq, "chan"] = chan
         }
