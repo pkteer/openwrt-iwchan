@@ -14,6 +14,10 @@ function get_iwphy() {
         else if($0 ~ /^\s*\*\s*[0-9]+\s*MHz.*dBm/) {
             freq = gensub(/^.*\s([0-9]+)\s*MHz.*$/, "\\1", 1, $0)
             chan = gensub(/^.*\[([0-9]+)\].*$/, "\\1", 1, $0)
+            # Don't select channels which involve radar detection because
+            # the wifi chip may not be able to use them at all, which will
+            # result in a silent failure to set the channel.
+            if($0 ~ "radar detection") continue
             iwphy[phy, freq, "band"] = band
             iwphy[phy, freq, "chan"] = chan
         }
